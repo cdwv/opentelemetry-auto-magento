@@ -1,0 +1,40 @@
+{
+    "name": "cdwv/opentelemetry-auto-magento",
+    "homepage": "https://github.com/cdwv/opentelemetry-auto-magento",
+    "description": "OpenTelemetry auto-instrumentation for Magento 2 Framework",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Codewave\\OpenTelemetry\\Magento\\": "src/"
+        },
+        "files": [
+          "_register.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Grzegorz Daszuta",
+            "email": "grzegorz.daszuta@codewave.pl"
+        }
+    ],
+    "require": {
+        "open-telemetry/sdk": "^1.4",
+        "symfony/http-client": "^7.2",
+        "nyholm/psr7": "^1.8"
+    },
+    "suggest": {
+	    "mismatch/opentelemetry-auto-redis": "For instrumenting of Redis spans",
+	    "open-telemetry/opentelemetry-auto-guzzle": "For external http requests",
+	    "open-telemetry/opentelemetry-auto-pdo": "For mysql query instrumentation"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "tbachert/spi": true
+        }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.22"
+    }
+}
