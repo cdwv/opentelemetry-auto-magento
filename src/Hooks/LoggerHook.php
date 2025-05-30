@@ -31,7 +31,7 @@ class LoggerHook
                     $record = (new LogRecord($message))
                         ->setSeverityText(Logger::getLevelName($level))
                         ->setSeverityNumber($level)
-                        ->setAttributes($context);
+                        ->setAttributes($this->flattenAttributes($context));
 
                     $logger->emit($record);
 
@@ -39,5 +39,20 @@ class LoggerHook
 
                 return $params;
             });
+    }
+
+    protected function flattenAttributes(array $attributes): array
+    {
+        return array_map(function ($attribute) {
+            if ($attribute instanceof \Throwable) {
+                return (string) $attribute;
+            }
+
+            if (is_array($attribute)) {
+                return json_encode($attribute);
+            }
+
+            return $attribute;
+        }, $attributes);
     }
 }
