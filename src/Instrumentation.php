@@ -20,6 +20,7 @@ class Instrumentation
         Hooks\ConsoleApplicationHook::hook($instrumentation);
         Hooks\CommandHook::hook($instrumentation);
         Hooks\BootstrapCreateHook::hook($instrumentation);
+        Hooks\BootstrapPopulateAutoloaderHook::hook($instrumentation);
         Hooks\BootstrapCreateApplicationHook::hook($instrumentation);
         Hooks\BootstrapRunApplicationHook::hook($instrumentation);
         Hooks\ActionHook::hook($instrumentation);

@@ -8,6 +8,7 @@ use OpenTelemetry\API\Trace\Span;
 use OpenTelemetry\Context\Context;
 use OpenTelemetry\SemConv\TraceAttributes;
 use Symfony\Component\Console;
+use Throwable;
 
 use function OpenTelemetry\Instrumentation\hook;
 
@@ -20,11 +21,10 @@ class ConsoleApplicationHook
         return hook(
             Console\Application::class,
             'run',
-            pre: function (Console\Application $magento, array $params, string $class, string $function, ?string $filename, ?int $lineno) {
+            pre: function (Console\Application $command, array $params, string $class, string $function, ?string $filename, ?int $lineno) {
                 $builder = $this->instrumentation
                     ->tracer()
-                // ->spanBuilder(sprintf('Command %s', $command->getName() ?: 'unknown'))
-                    ->spanBuilder('magento cli')
+                    ->spanBuilder(sprintf('Command %s', $command->getName() ?: 'unknown'))
                     ->setAttribute(TraceAttributes::CODE_FUNCTION, $function)
                     ->setAttribute(TraceAttributes::CODE_NAMESPACE, $class)
                     ->setAttribute(TraceAttributes::CODE_FILEPATH, $filename)
@@ -37,7 +37,7 @@ class ConsoleApplicationHook
                 return $params;
 
             },
-            post: function (Console\Application $magento, array $params, ?int $exitCode, ?Throwable $exception): void {
+            post: function (Console\Application $command, array $params, ?int $exitCode, ?Throwable $exception): void {
                 $scope = Context::storage()->scope();
                 if (! $scope) {
                     return;

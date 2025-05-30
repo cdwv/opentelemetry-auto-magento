@@ -7,6 +7,7 @@ namespace Codewave\OpenTelemetry\Magento\Hooks;
 use Magento\Framework\Session\SessionManager;
 use OpenTelemetry\Context\Context;
 use OpenTelemetry\SemConv\TraceAttributes;
+use Throwable;
 
 use function OpenTelemetry\Instrumentation\hook;
 

@@ -8,6 +8,7 @@ use OpenTelemetry\API\Trace\Span;
 use OpenTelemetry\Context\Context;
 use OpenTelemetry\SemConv\TraceAttributes;
 use Symfony\Component\Console\Command\Command;
+use Throwable;
 
 use function OpenTelemetry\Instrumentation\hook;
 

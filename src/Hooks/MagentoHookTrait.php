@@ -6,8 +6,10 @@ namespace Codewave\OpenTelemetry\Magento\Hooks;
 
 use OpenTelemetry\API\Instrumentation\CachedInstrumentation;
 use OpenTelemetry\API\Trace\Span;
+use OpenTelemetry\API\Trace\StatusCode;
 use OpenTelemetry\Context\Context;
 use OpenTelemetry\SemConv\TraceAttributes;
+use Throwable;
 
 trait MagentoHookTrait
 {
