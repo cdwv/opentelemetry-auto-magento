@@ -29,7 +29,7 @@ class AutoRootSpan extends Base
         $startTime = array_key_exists('REQUEST_TIME_FLOAT', $request->getServerParams())
             ? $request->getServerParams()['REQUEST_TIME_FLOAT']
             : (int) microtime(true);
-        $span = $tracer->spanBuilder($request->getMethod() . ' ' . $request->getUri()->getPath())
+        $span = $tracer->spanBuilder($request->getMethod().' '.$request->getUri()->getPath())
             ->setSpanKind(SpanKind::KIND_SERVER)
             ->setStartTimestamp((int) ($startTime * ClockInterface::NANOS_PER_SECOND))
             ->setParent($parent)

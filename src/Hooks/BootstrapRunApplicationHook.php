@@ -38,6 +38,20 @@ class BootstrapRunApplicationHook
             },
             post: function (Bootstrap $bootstrap, array $params, $returnValue, ?Throwable $exception): void {
                 $this->endSpan($exception);
+
+                /**
+                 * Finish request to not introduce an extra latency
+                 * before OpenTelemetry module sends all the span
+                 * data to the collector.
+                 */
+                if (\function_exists('fastcgi_finish_request')) {
+                    fastcgi_finish_request();
+                } elseif (\function_exists('litespeed_finish_request')) {
+                    litespeed_finish_request();
+                } elseif (! \in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
+                    static::closeOutputBuffers(0, true);
+                    flush();
+                }
             }
         );
     }

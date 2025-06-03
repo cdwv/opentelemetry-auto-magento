@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Codewave\OpenTelemetry\Magento\Hooks;
 
-use Codewave\OpenTelemetry\Magento\Trace\CliAutoRootSpan;
 use Codewave\OpenTelemetry\Magento\Trace\AutoRootSpan;
+use Codewave\OpenTelemetry\Magento\Trace\CliAutoRootSpan;
 use Magento\Framework\App\Bootstrap;
 use OpenTelemetry\Context\Context;
 use OpenTelemetry\SemConv\TraceAttributes;
