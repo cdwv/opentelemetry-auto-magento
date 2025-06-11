@@ -22,7 +22,8 @@ class LoggerHook
             'addRecord',
             pre: function (Logger $logger, array $params, string $class, string $function, ?string $filename, ?int $lineno) {
                 [$level, $message, $context, $datetime] = array_pad($params, 4, null);
-                $hash = md5(serialize([$level, $message, $context, $datetime]));
+                $flatContext = $this->flattenAttributes($context);
+                $hash = md5(serialize([$level, $message, $flatContext, $datetime]));
                 $this->logHashes[$hash] = 1 + ($this->logHashes[$hash] ?? 0);
 
                 if ($this->logHashes[$hash] == 1) {
@@ -31,7 +32,7 @@ class LoggerHook
                     $record = (new LogRecord($message))
                         ->setSeverityText(Logger::getLevelName($level))
                         ->setSeverityNumber($level)
-                        ->setAttributes($this->flattenAttributes($context));
+                        ->setAttributes($flatContext);
 
                     $logger->emit($record);
 
