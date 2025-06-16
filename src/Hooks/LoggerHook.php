@@ -42,7 +42,7 @@ class LoggerHook
             });
     }
 
-    protected function flattenAttributes(array $attributes): array
+    protected function flattenAttributes(array $attributes = []): array
     {
         return array_map(function ($attribute) {
             if ($attribute instanceof \Throwable) {
