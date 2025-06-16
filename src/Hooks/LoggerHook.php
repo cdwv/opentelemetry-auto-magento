@@ -22,7 +22,7 @@ class LoggerHook
             'addRecord',
             pre: function (Logger $logger, array $params, string $class, string $function, ?string $filename, ?int $lineno) {
                 [$level, $message, $context, $datetime] = array_pad($params, 4, null);
-                $flatContext = $this->flattenAttributes($context);
+                $flatContext = $this->flattenAttributes($context ?? []);
                 $hash = md5(serialize([$level, $message, $flatContext, $datetime]));
                 $this->logHashes[$hash] = 1 + ($this->logHashes[$hash] ?? 0);
 
@@ -42,7 +42,7 @@ class LoggerHook
             });
     }
 
-    protected function flattenAttributes(array $attributes = []): array
+    protected function flattenAttributes(array $attributes): array
     {
         return array_map(function ($attribute) {
             if ($attribute instanceof \Throwable) {
