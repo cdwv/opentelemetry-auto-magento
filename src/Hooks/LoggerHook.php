@@ -31,7 +31,7 @@ class LoggerHook
 
                     $record = (new LogRecord($message))
                         ->setSeverityText(Logger::getLevelName($level))
-                        ->setSeverityNumber($level)
+                        ->setSeverityNumber($level instanceof \Monolog\Level ? $level->value : $level)
                         ->setAttributes($flatContext);
 
                     $logger->emit($record);
