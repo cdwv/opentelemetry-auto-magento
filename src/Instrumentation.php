@@ -26,6 +26,8 @@ class Instrumentation
         Hooks\ActionHook::hook($instrumentation);
         Hooks\SessionManagerHook::hook($instrumentation);
         Hooks\LoggerHook::hook($instrumentation);
+        Hooks\GraphQlQueryLoggerHook::hook($instrumentation);
+        Hooks\GraphQlControllerHook::hook($instrumentation);
     }
 
     public static function shouldTraceCli(): bool
