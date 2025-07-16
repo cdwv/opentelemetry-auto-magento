@@ -6,7 +6,7 @@ namespace Codewave\OpenTelemetry\Magento\Hooks;
 
 use Monolog\Logger;
 use OpenTelemetry\API\Logs\LogRecord;
-
+use OpenTelemetry\API\Logs\Severity;
 use function OpenTelemetry\Instrumentation\hook;
 
 class LoggerHook
@@ -29,9 +29,10 @@ class LoggerHook
                 if ($this->logHashes[$hash] == 1) {
                     $logger = $this->instrumentation->logger();
 
+		    $logLevelString = Logger::getLevelName($level);
                     $record = (new LogRecord($message))
-                        ->setSeverityText(Logger::getLevelName($level))
-                        ->setSeverityNumber($level instanceof \Monolog\Level ? $level->value : $level)
+                        ->setSeverityText($logLevelString)
+                        ->setSeverityNumber(Severity::fromPsr3($logLevelString))
                         ->setAttributes($flatContext);
 
                     $logger->emit($record);
